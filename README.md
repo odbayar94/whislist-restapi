@@ -45,5 +45,4 @@ yarn start or npm run start
 will start a front development server at http://localhost:5000
 
 ## Authors
-
-- \*\* Odbayar.O, Azzaya.B, Suvd-Erdene.S and Ugtakhbayar.S
+- Odbayar.O, Azzaya.B, Suvd-Erdene.S and Ugtakhbayar.S

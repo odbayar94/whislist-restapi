@@ -18,8 +18,9 @@ export default {
   jwtExpiresIn: process.env.JWT_EXPIRESIN,
   gmailAddress: process.env.GMAIL_ADDRESS,
   gmailPassword: process.env.GMAIL_PASSWORD,
+  joinMonitaEmail: "Та монита групт нэгдлээ",
+  monitaGroupLink: process.env.MONITA_GROUP_LINK
   
-
 };
 
 const whiteList = ["http://localhost:3000", "http://localhost:3001"];
