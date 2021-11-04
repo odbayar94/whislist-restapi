@@ -9,13 +9,16 @@ const MonitaGroupSchema = new Schema({
     endDate: { type: Date},
     selectedUsers:  { type: [{
         userId:   {type: String, required: false },
-        email:  {type: String }
+        email:  {type: String,required: true },
+        name:  {type: String, required: false},
+        imageUrl:  {type: String, required: false},
+        active:{type: Boolean, default: false}
       }]},
     createdBy: { type: ObjectId, ref: 'users' },
     shortenUri: { type: String },
-    updatedAt: { type: Date},
-    createdAt: { type: Date, default: Date.now },
-    
+},
+{
+  timestamps: true,
 })
 
 const MonitaGroup: Model<IMonitaGroup> = model('MonitaGroup', MonitaGroupSchema)
