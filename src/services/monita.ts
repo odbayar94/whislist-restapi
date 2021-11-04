@@ -1,50 +1,63 @@
 import MyError from "../utils/MyError";
 import MonitaGroup from "../models/MonitaGroup";
-
+const { ObjectId } = require("mongodb");
+// import mongoose from "mongoose";
 
 //My imports
 import config from "../config";
-import SendEmail from "../utils/SendEmail"
+import SendEmail from "../utils/SendEmail";
 
-export const createMonitaGroup  = async function(name: string, endDate:string, description: string, selectedUsers: any){
-   //ene hesegt monita group iin link-iig generate hiine
-   const shortenUri = (Math.random() + 1).toString(36).substring(7);
+export const createMonitaGroup = async function (
+  name: string,
+  endDate: string,
+  description: string,
+  selectedUsers: any
+) {
+  //ene hesegt monita group iin link-iig generate hiine
+  const shortenUri = (Math.random() + 1).toString(36).substring(7);
 
-    try{
-    const group = await MonitaGroup.create({name,endDate,description,selectedUsers,shortenUri }); 
-    
+  try {
+    const group = await MonitaGroup.create({
+      name,
+      endDate,
+      description,
+      selectedUsers,
+      shortenUri,
+    });
+
     sendEmailMonitaGroup(selectedUsers, name, group.id);
     return group;
-
-   }catch(error){
+  } catch (error) {
     throw new Error();
-   }
-}
+  }
+};
 
-export const getMonitaGroup = async function(monitaGroupId: string){
-    try{
-        const monitaGroup = await MonitaGroup.findById(monitaGroupId); 
+export const getMonitaGroup = async function (monitaGroupId: string) {
+  try {
+    const monitaGroup = await MonitaGroup.findById(ObjectId(monitaGroupId));
 
-        return monitaGroup;
+    return monitaGroup;
+  } catch (error) {
+    throw new Error();
+  }
+};
 
-       }catch(error){
-        throw new Error();
-       }
+const sendEmailMonitaGroup = async function (
+  emails: Array<any>,
+  monitaGroupName: string,
+  id: string
+) {
+  //array dotor olon email bh bogood zereg email ilgeehed string bolgoj ashiglana
+  let toEmail = "";
+  emails.forEach((index) => {
+    return (toEmail += ", " + index.email);
+  });
 
-}
+  toEmail = toEmail.substring(2);
 
-const sendEmailMonitaGroup = async function (emails: Array<any>, monitaGroupName: string, id: string){
-//array dotor olon email bh bogood zereg email ilgeehed string bolgoj ashiglana
-let toEmail = "";
-emails.forEach((index) => {
-  return (toEmail += ", " + index.email);
-});
+  const url = config.monitaGroupLink + id;
 
-toEmail = toEmail.substring(2);
-
-const url = config.monitaGroupLink + id ;
-
-const html = `<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="en">
   <body>
     <div>
@@ -58,8 +71,12 @@ const html = `<!DOCTYPE html>
     </div>
   </body>
 </html>`;
-  const sendEmail = new SendEmail(toEmail, `Та ${monitaGroupName} монита групт нэгдлээ`, html);
+  const sendEmail = new SendEmail(
+    toEmail,
+    `Та ${monitaGroupName} монита групт нэгдлээ`,
+    html
+  );
   sendEmail.send();
 
   return sendEmail;
-}
+};

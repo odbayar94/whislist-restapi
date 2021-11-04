@@ -1,4 +1,4 @@
-import config, { corsOptions } from "./config";
+import config from "./config";
 import express from "express";
 // import makeApp from "./app";
 import app from "./app";
