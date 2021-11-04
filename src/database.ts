@@ -4,10 +4,11 @@ import mongoose from "mongoose";
 const uri: string = config.databaseURL || "";
 
 mongoose.connect(uri);
-const connection = mongoose.connection;
+console.log("MongoDB database connection established successfully");
+// const connection = mongoose.connection;
 
-connection.once("open", () => {
-  console.log("MongoDB database connection established successfully");
-});
+// connection.once("open", () => {
+//   console.log("MongoDB database connection established successfully");
+// });
 
-export default connection;
+// export default connection;
