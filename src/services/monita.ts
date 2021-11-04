@@ -13,7 +13,7 @@ export const createMonitaGroup  = async function(name: string, endDate:string, d
     try{
     const group = await MonitaGroup.create({name,endDate,description,selectedUsers,shortenUri }); 
     
-    sendEmailMonitaGroup(selectedUsers, name,shortenUri);
+    sendEmailMonitaGroup(selectedUsers, name, group.id);
     return group;
 
    }catch(error){
@@ -33,7 +33,7 @@ export const getMonitaGroup = async function(monitaGroupId: string){
 
 }
 
-const sendEmailMonitaGroup = async function (emails: Array<any>, monitaGroupName: string, shortenUri: string){
+const sendEmailMonitaGroup = async function (emails: Array<any>, monitaGroupName: string, id: string){
 //array dotor olon email bh bogood zereg email ilgeehed string bolgoj ashiglana
 let toEmail = "";
 emails.forEach((index) => {
@@ -42,7 +42,7 @@ emails.forEach((index) => {
 
 toEmail = toEmail.substring(2);
 
-const url = config.monitaGroupLink + shortenUri ;
+const url = config.monitaGroupLink + id ;
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -58,7 +58,7 @@ const html = `<!DOCTYPE html>
     </div>
   </body>
 </html>`;
-  const sendEmail = new SendEmail(toEmail, `Та ${monitaGroupName} монта групт нэгдлээ`, html);
+  const sendEmail = new SendEmail(toEmail, `Та ${monitaGroupName} монита групт нэгдлээ`, html);
   sendEmail.send();
 
   return sendEmail;
