@@ -1,51 +1,33 @@
-// const mathOperations = require('./calculator')
-import * as service from "../src/services";
-// const { getUser } = require('../src/services/user.ts')
+import request from "supertest";
+import makeApp from "../src/server";
+import { jest } from "@jest/globals";
 
-describe("Service testing", () => {
-  test("Service", () => {
-    var result = service.getMonitaGroup("61758b48c084dab83d306e53");
-    expect(result).toBe({
-      success: true,
-      statusCode: 200,
-      messageCode: "POST201",
-      message: "Амжилттай",
-      data: {
-        _id: "61758b48c084dab83d306e53",
-        name: "beleg ogoh",
-        description: "",
-        endDate: "2021-10-24T16:30:32.575Z",
-        selectedUsers: [
-          {
-            email: "odko@yhao.com",
-            name: null,
-            imageUrl: null,
-            active: false,
-            _id: "61758b48c084dab83d306e54",
-          },
-          {
-            email: "odbayar@monpass.mn",
-            name: null,
-            imageUrl: null,
-            active: false,
-            _id: "61758b48c084dab83d306e55",
-          },
-        ],
-        shortenUri: "61bcx",
-        createdAt: "2021-10-24T16:35:20.790Z",
-        updatedAt: "2021-10-24T16:35:20.790Z",
-        __v: 0,
-      },
+const getMonita = jest.fn();
+const app = makeApp({
+  createUser,
+  getUser,
+});
+
+describe("POST /users", () => {
+  beforeEach(() => {
+    createUser.mockReset();
+    createUser.mockResolvedValue(0);
+  });
+
+  describe("given a username and password", () => {
+    test("should save the username and password to the database", async () => {
+      const bodyData = [
+        { username: "username1", password: "password1" },
+        { username: "username2", password: "password2" },
+        { username: "username3", password: "password3" },
+      ];
+      for (const body of bodyData) {
+        createUser.mockReset();
+        await request(app).post("/users").send(body);
+        expect(createUser.mock.calls.length).toBe(1);
+        expect(createUser.mock.calls[0][0]).toBe(body.username);
+        expect(createUser.mock.calls[0][1]).toBe(body.password);
+      }
     });
   });
-});
-
-import { sum } from "./foo";
-
-test("basic", () => {
-  expect(sum()).toBe(0);
-});
-
-test("basic again", () => {
-  expect(sum(1, 2)).toBe(3);
 });

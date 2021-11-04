@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --detectOpenHandles",
     "start": "nodemon src/server.ts"
   },
   "keywords": [],
@@ -55,6 +55,7 @@
     "jest-environment-node": "^27.3.1",
     "jest-html-reporter": "^3.4.1",
     "prettier": "2.4.0",
+    "supertest": "^6.1.6",
     "ts-jest": "^27.0.7",
     "typescript": "^4.4.3"
   }

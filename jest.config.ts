@@ -4,7 +4,7 @@ import type { Config } from "@jest/types";
 const config: Config.InitialOptions = {
   verbose: true,
 
-  transformIgnorePatterns: ["node_modules/(?!node-sass)/"],
+  transformIgnorePatterns: ["node_modules/(?!node-sass)/", "^.+\\.js$"],
   reporters: [
     "default",
     [
