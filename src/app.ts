@@ -7,7 +7,7 @@ import cors from "cors";
 
 import config, { corsOptions } from "./config";
 
-export default function (database) {
+export default function (database: any) {
   const app = express();
   app.use(cookieParser());
   app.use(express.json());
