@@ -5,6 +5,7 @@ const config: Config.InitialOptions = {
   verbose: true,
 
   transformIgnorePatterns: ["node_modules/(?!node-sass)/", "^.+\\.js$"],
+  coveragePathIgnorePatterns: ["src/middleware/"],
   reporters: [
     "default",
     [
