@@ -24,13 +24,13 @@ var errorObj: IError = {
 
 export const createMonitaGroup = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, endDate, description, selectedUsers } = req.body;
+    const { createdUser, name, endDate, description } = req.body;
     if (name && endDate) {
       const monitaGroup: any = await service.createMonitaGroup(
+        createdUser,
         name,
         endDate,
-        description,
-        selectedUsers
+        description
       );
       if (!monitaGroup) {
         throw new MyError({

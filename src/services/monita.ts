@@ -8,24 +8,24 @@ import config from "../config";
 import SendEmail from "../utils/SendEmail";
 
 export const createMonitaGroup = async function (
+  createdUser: Object,
   name: string,
   endDate: string,
-  description: string,
-  selectedUsers: any
+  description: string
 ) {
   //ene hesegt monita group iin link-iig generate hiine
   const shortenUri = (Math.random() + 1).toString(36).substring(7);
 
   try {
     const group = await MonitaGroup.create({
+      createdUser,
       name,
       endDate,
       description,
-      selectedUsers,
       shortenUri,
     });
 
-    sendEmailMonitaGroup(selectedUsers, name, group.id);
+    // sendEmailMonitaGroup(selectedUsers, name, group.id);
     return group;
   } catch (error) {
     throw new Error();
