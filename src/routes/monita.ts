@@ -1,12 +1,12 @@
 import express from "express";
 
 import protect from "../middleware/protect";
-import * as monita from "../controller/monita"
+import * as monita from "../controller/monita";
 
 const router = express.Router();
 
-router.route("/")
-.post(monita.createMonitaGroup);
+router.route("/").post(monita.createMonitaGroup);
+router.route("/my/:email").get(monita.getMyMonitaGroup);
 
 router.route("/:id").get(monita.getMonitaGroup);
 

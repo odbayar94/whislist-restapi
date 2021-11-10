@@ -7,6 +7,18 @@ const { ObjectId } = require("mongodb");
 import config from "../config";
 import SendEmail from "../utils/SendEmail";
 
+export const getMyMonitaGroup = async function (email: string) {
+  try {
+    const myMonitaGroup = await MonitaGroup.find({
+      "createdUser.email": email,
+    });
+
+    return myMonitaGroup;
+  } catch (error) {
+    throw new Error();
+  }
+};
+
 export const createMonitaGroup = async function (
   createdUser: Object,
   name: string,

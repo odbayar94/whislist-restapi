@@ -9,10 +9,10 @@ import Monita from "../models/MonitaGroup";
 import * as service from "../services";
 
 var response: IResponse = {
-  success: false,
-  statusCode: 401,
-  messageCode: "error",
-  message: "Service doesn't work",
+  success: true,
+  statusCode: 200,
+  messageCode: "POST201",
+  message: "Амжилттай",
   data: {},
 };
 
@@ -22,6 +22,13 @@ var errorObj: IError = {
   statusCode: 400,
 };
 
+export const getMyMonitaGroup = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const myMonitaGroup = await service.getMyMonitaGroup(req.params.email);
+
+    res.status(200).json({ ...response, data: myMonitaGroup });
+  }
+);
 export const createMonitaGroup = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { createdUser, name, endDate, description } = req.body;
