@@ -12,8 +12,12 @@ export const getMyMonitaGroup = async function (email: string) {
     const myMonitaGroup = await MonitaGroup.find({
       "createdUser.email": email,
     });
+    var response: { _id: any; name: string | undefined }[] = [];
+    myMonitaGroup.forEach((el) => {
+      response.push({ _id: el._id, name: el.name });
+    });
 
-    return myMonitaGroup;
+    return response;
   } catch (error) {
     throw new Error();
   }
