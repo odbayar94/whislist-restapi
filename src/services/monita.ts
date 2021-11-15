@@ -9,15 +9,19 @@ import SendEmail from "../utils/SendEmail";
 
 export const getMyMonitaGroup = async function (email: string) {
   try {
-    const myMonitaGroup = await MonitaGroup.find({
-      "createdUser.email": email,
-    });
-    var response: { _id: any; name: string | undefined }[] = [];
-    myMonitaGroup.forEach((el) => {
-      response.push({ _id: el._id, name: el.name });
-    });
+    const myMonitaGroup = await MonitaGroup.find(
+      {
+        "createdUser.email": email,
+      },
+      "_id, name"
+    );
 
-    return response;
+    // var response: { _id: any; name: string | undefined }[] = [];
+    // myMonitaGroup.forEach((el) => {
+    //   response.push({ _id: el._id, name: el.name });
+    // });
+
+    return myMonitaGroup;
   } catch (error) {
     throw new Error();
   }
